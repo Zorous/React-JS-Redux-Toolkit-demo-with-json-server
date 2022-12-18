@@ -575,16 +575,20 @@ export const ProductsSlice = createSlice({
         ,
         handleInsert :(state,action)=>{
          console.log(action.payload)
-         const newProduct = {
-            "id" : 0,
-            "title": action.payload.title,
-            "category" : action.payload.category
-         }
-         state = state.push(newProduct)
+          
+         state.push({
+            id : state.length + 1,
+            title: action.payload.title,
+            category : action.payload.category,
+            image : "https://i.dummyjson.com/data/products/1/2.jpg"
+        })
          console.log(state)
          return state
         }
         ,
+        updateProduct:()=>{
+            alert('update')
+        },
         TestAccess : ()=>{
             alert('tada!')
         }
@@ -592,7 +596,7 @@ export const ProductsSlice = createSlice({
 
 })
 
-export const {handleDeleteR,handleInsert,TestAccess} = ProductsSlice.actions
+export const {handleDeleteR,updateProduct,handleInsert,TestAccess} = ProductsSlice.actions
 
 
 export default ProductsSlice.reducer;

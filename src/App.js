@@ -5,6 +5,7 @@ import {Store} from './Redux/Store.js';
 // import Counter from './components/UseReducer';
 import { Provider } from 'react-redux';
 import Test from './components/Test';
+import Users from './components/Users';
 
 
 function App() {
