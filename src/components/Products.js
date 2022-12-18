@@ -1,10 +1,10 @@
 import React, { useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { TestAccess, handleDeleteR , handleInsert} from '../Redux/Slices/ProductsSlice';
+import { TestAccess, handleDeleteR , handleInsert, updateProduct} from '../Redux/Slices/ProductsSlice';
 
 function Products() {
 const [title,setTitle]= useState();
-const [category,setCategory]= useState();
+const [category,setCategory]= useState("");
 
 const productsS = useSelector((state)=>state.products)
 
@@ -12,6 +12,7 @@ const dispatch = useDispatch();
 const [isClicked, setisClicked] = useState(false);
 const [CurrentItem ,setCurrentItem] = useState(0);
 const [CurrentItemN ,setCurrentItemN] = useState("");
+const [Image ,setImage] = useState(null);
 
 
 
@@ -37,22 +38,30 @@ return (
                                 <table>
                                     <tr>
                                         <td><b>Title :  </b></td>
-                                        <td><input type={"text"} name="title" 
+                                        <td><input type={"text"}  id="title" 
                                         placeholder={isClicked?CurrentItemN:""}
                                         onChange={(e)=>{setTitle(e.target.value)}}/></td>
                                     </tr> <br />
                                     <tr>
                                         <td><b>Category :  </b></td>
-                                        <td><input type={"text"} name="category" 
-                                        placeholder={isClicked?CurrentItemN:""}
+                                        <td><input type={"text"} id="category" 
+                                        placeholder={isClicked?category:""}
                                         onChange={(e)=>{setCategory(e.target.value)}}/></td>
+                                    </tr> <br />
+                                    <tr>
+                                        <td><b>Image :  </b></td>
+                                        <td><input type={"file"} id="image" 
+                                        onChange={(event) => {
+                                          console.log(event.target.files[0]);
+                                          setImage(event.target.files[0]);
+                                        }}/></td>
                                     </tr> <br />
                           
                                     <tr>
                                         <td colSpan={2} align="right"> <br />
                                             <button type="button" className="btn btn-success" onClick={()=>{
-                                               isClicked?dispatch(handleInsert({id:CurrentItem,newValue:title})) :  dispatch(handleInsert({title:title,category:category}))
-                                            }} data-dismiss="modal">
+                                               isClicked?dispatch(updateProduct({id:CurrentItem,titleN:title,categoryN:category})) :  dispatch(handleInsert({title:title,category:category,image:Image}))
+                                              }} data-dismiss="modal">
                                             {isClicked?<b>Update </b>:<b> + Add </b>}
                                             </button>
                                         </td>
@@ -69,7 +78,7 @@ return (
         <div style={{ margin: "3vh 47vw", display: "flex" }}>
             <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
             onClick={()=>{setisClicked(false)}}>
-                + Add a User
+                + Add a Product
             </button>
         </div>
         <table className="table">
@@ -103,6 +112,7 @@ return (
                                     setisClicked(true)
                                     setCurrentItem(item.id)
                                     setCurrentItemN(item.title)
+                                    setCategory(item.category)
                                 }}>Update</button>
                             </td>
                         </tr>

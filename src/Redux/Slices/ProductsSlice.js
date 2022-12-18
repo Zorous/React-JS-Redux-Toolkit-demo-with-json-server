@@ -566,6 +566,8 @@ export const ProductsSlice = createSlice({
     //3
     reducers : {
         handleDeleteR : (state,action)=>{
+            alert('Are you sure you want to delete this item?')
+
             state = state.filter(i=>(action.payload !== i.id))
             return state
         },
@@ -574,20 +576,28 @@ export const ProductsSlice = createSlice({
         }
         ,
         handleInsert :(state,action)=>{
-         console.log(action.payload)
+        //  console.log(action.payload)
           
-         state.push({
-            id : state.length + 1,
-            title: action.payload.title,
-            category : action.payload.category,
-            image : "https://i.dummyjson.com/data/products/1/2.jpg"
+        state.push({
+            "id": state.length + 1,
+            title:action.payload.title,
+            category:action.payload.category,
+            images:[action.payload.image]
         })
-         console.log(state)
+        //  console.log(state)
          return state
         }
         ,
-        updateProduct:()=>{
-            alert('update')
+        updateProduct:(state,action)=>{
+            // alert('update')
+            console.log(action.payload)
+            const objIndex = state.findIndex((i)=>i.id == action.payload.id)
+            // alert(objIndex)
+            state[objIndex].title=action.payload.titleN
+            state[objIndex].category=action.payload.categoryN
+
+            console.log(state)
+            return state
         },
         TestAccess : ()=>{
             alert('tada!')
