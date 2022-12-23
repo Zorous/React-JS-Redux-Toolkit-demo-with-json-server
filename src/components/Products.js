@@ -1,20 +1,24 @@
 import React, { useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { TestAccess, handleDeleteR , handleInsert, updateProduct} from '../Redux/Slices/ProductsSlice';
+import { TestAccess, handleDeleteR , handleInsert, updateProduct, getProducts} from '../Redux/Slices/ProductsSlice';
 
 function Products() {
 const [title,setTitle]= useState();
 const [category,setCategory]= useState("");
-
-const productsS = useSelector((state)=>state.products)
-
-const dispatch = useDispatch();
-const [isClicked, setisClicked] = useState(false);
-const [CurrentItem ,setCurrentItem] = useState(0);
-const [CurrentItemN ,setCurrentItemN] = useState("");
 const [Image ,setImage] = useState(null);
 
 
+const productsS = useSelector((state)=>state.products)
+const dispatch = useDispatch();
+
+
+const [isClicked, setisClicked] = useState(false);
+const [CurrentItem ,setCurrentItem] = useState(0);
+const [CurrentItemN ,setCurrentItemN] = useState("");
+
+useEffect(()=>{
+    dispatch(getProducts())
+},[dispatch])
 
 
 
@@ -95,7 +99,7 @@ return (
             <tbody>
                 {productsS?.map((item, index) => {
                     return (
-                        <tr>
+                        <tr key={index}>
                             <th scope="row">{index}</th>
                             <td>{item.id}</td>
                             <td>{item.title}</td>
