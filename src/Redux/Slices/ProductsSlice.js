@@ -17,13 +17,15 @@ export const ProductsSlice = createSlice({
     name:"products",
 
     //2
-    initialState:[],
+    initialState: {
+        products:[],
+        isLoading:false
+    },
 
     //3
     reducers : {
         handleDeleteR : (state,action)=>{
             alert('Are you sure you want to delete this item?')
-
             state = state.filter(i=>(action.payload !== i.id))
             return state
         },
@@ -57,14 +59,18 @@ export const ProductsSlice = createSlice({
     },
     extraReducers:{
         [getProducts.pending]:(state,action) =>{
+state.isLoading=true
 console.log(action)
 
         },
         [getProducts.fulfilled]:(state,action) =>{
+state.isLoading=false
+state.products=action.payload
 console.log(action)
 
         },
         [getProducts.rejected]:(state,action) =>{
+state.isLoading=false
 console.log(action)
         },
     }

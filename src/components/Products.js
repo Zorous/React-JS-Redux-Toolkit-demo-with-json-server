@@ -7,8 +7,8 @@ const [title,setTitle]= useState();
 const [category,setCategory]= useState("");
 const [Image ,setImage] = useState(null);
 
-
-const productsS = useSelector((state)=>state.products)
+const {isLoading,products} = useSelector((state)=>state.products)
+const productsS = useSelector((state)=>state.products.products)
 const dispatch = useDispatch();
 
 
@@ -97,7 +97,7 @@ return (
                 </tr>
             </thead>
             <tbody>
-                {productsS?.map((item, index) => {
+                {isLoading?("loading ..."):productsS && productsS.map((item, index) => {
                     return (
                         <tr key={index}>
                             <th scope="row">{index}</th>
@@ -122,7 +122,7 @@ return (
                         </tr>
                     )
                 })}
-
+            
 
             </tbody>
         </table>
