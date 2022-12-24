@@ -7,7 +7,7 @@ const [title,setTitle]= useState();
 const [category,setCategory]= useState("");
 const [Image ,setImage] = useState(null);
 
-const {isLoading,products} = useSelector((state)=>state.products)
+const {isLoading,products,error} = useSelector((state)=>state.products)
 const productsS = useSelector((state)=>state.products.products)
 const dispatch = useDispatch();
 
@@ -25,6 +25,10 @@ useEffect(()=>{
 
 return (
     <div>
+
+
+
+
         <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
@@ -78,6 +82,11 @@ return (
                 </div>
             </div>
         </div>
+
+
+        {error?<div class="alert alert-danger" role="alert">
+        {error}
+      </div>:""}
 
         <div style={{ margin: "3vh 47vw", display: "flex" }}>
             <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
