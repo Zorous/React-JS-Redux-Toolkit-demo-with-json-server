@@ -1,15 +1,25 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useRef, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { TestAccess, handleDeleteR , handleInsert, updateProduct, getProducts} from '../Redux/Slices/ProductsSlice';
+import { TestAccess, handleDeleteR , handleInsert, updateProduct, getProducts,insertProduct} from '../Redux/Slices/ProductsSlice';
 
 function Products() {
+
+
+//States
 const [title,setTitle]= useState();
 const [category,setCategory]= useState("");
 const [Image ,setImage] = useState(null);
 
+//Refs
+const titleR = useRef(null);
+// const priceR = useRef(null);
+const categoryR = useRef(null);
+
 const {isLoading,products,error} = useSelector((state)=>state.products)
 const productsS = useSelector((state)=>state.products.products)
 const dispatch = useDispatch();
+
+
 
 
 const [isClicked, setisClicked] = useState(false);
@@ -20,7 +30,18 @@ useEffect(()=>{
     dispatch(getProducts())
 },[dispatch])
 
+const handleSubmit = ()=>{
+// e.preventDefault();
 
+//Creating our data object
+const data = {
+    title : titleR.current.value,
+    category : categoryR.current.value
+}
+dispatch(insertProduct(data))
+titleR.current.value=null;
+categoryR.current.value=null;
+}
 
 
 return (
@@ -42,17 +63,19 @@ return (
                     </div>
                     <div className="modal-body">
                         <div style={{}}>
-                            <form name='f1'>
+                            <form>
                                 <table>
                                     <tr>
                                         <td><b>Title :  </b></td>
                                         <td><input type={"text"}  id="title" 
                                         placeholder={isClicked?CurrentItemN:""}
+                                        ref={titleR}
                                         onChange={(e)=>{setTitle(e.target.value)}}/></td>
                                     </tr> <br />
                                     <tr>
                                         <td><b>Category :  </b></td>
                                         <td><input type={"text"} id="category" 
+                                        ref={categoryR}
                                         placeholder={isClicked?category:""}
                                         onChange={(e)=>{setCategory(e.target.value)}}/></td>
                                     </tr> <br />
@@ -67,9 +90,8 @@ return (
                           
                                     <tr>
                                         <td colSpan={2} align="right"> <br />
-                                            <button type="button" className="btn btn-success" onClick={()=>{
-                                               isClicked?dispatch(updateProduct({id:CurrentItem,titleN:title,categoryN:category})) :  dispatch(handleInsert({title:title,category:category,image:Image}))
-                                              }} data-dismiss="modal">
+                                            <button type="submit" className="btn btn-success" data-dismiss="modal"
+                                            onClick={()=>handleSubmit()}>
                                             {isClicked?<b>Update </b>:<b> + Add </b>}
                                             </button>
                                         </td>

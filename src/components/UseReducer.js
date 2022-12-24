@@ -10,22 +10,22 @@ function Counter() {
 
   function reducer(state, action) {
     // //1
-    // switch (action.type) {
-    //   case 'increment':
-    //     return {count: state.count + action.payload};
-    //     // return state = state + 1
-    //   case 'decrement':
-    //     return {count: state.count - action.payload};
-    //     case 'reset':
-    //         return {count : 0}
-    //   default:
-    //     throw new Error();
-    // }
+    switch (action.type) {
+      case 'increment':
+        return {count: state.count + action.payload};
+        // return state = state + 1
+      case 'decrement':
+        return {count: state.count - action.payload};
+        case 'reset':
+            return {count : 0}
+      default:
+        throw new Error();
+    }
 
    
-    if(action.type === "decrement"){return {count : state.count - 1}}
-    if(action.type === "increment"){return {count : state.count + 1}}
-    if(action.type === "reset"){return {count : 0}}
+    // if(action.type === "decrement"){return {count : state.count - 1}}
+    // if(action.type === "increment"){return {count : state.count + 1}}
+    // if(action.type === "reset"){return {count : 0}}
   }
   return (
     <>
