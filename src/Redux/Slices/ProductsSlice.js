@@ -9,6 +9,7 @@ export const getProducts = createAsyncThunk("products/getProducts", async (_, th
         const data = await res.json()
         return data
     }
+
     catch (error) {
         return rejectWithValue(error.message)
     }
@@ -37,6 +38,7 @@ export const insertProduct = createAsyncThunk("products/insertProduct", async (d
     }
 })
 
+//Creating a Slice
 export const ProductsSlice = createSlice({
     //1
     name: "products",
@@ -103,15 +105,15 @@ export const ProductsSlice = createSlice({
         },
 
         //Adding Products
-        [insertProduct.pending] : (state,action) =>{
+        [insertProduct.pending]: (state, action) => {
             state.isLoading = true
             state.error = null
         },
-        [insertProduct.fulfilled] : (state,action) =>{
+        [insertProduct.fulfilled]: (state, action) => {
             state.isLoading = false
             state.products.push(action.payload)
         },
-        [insertProduct.rejected] : (state,action) =>{
+        [insertProduct.rejected]: (state, action) => {
             state.isLoading = false
             state.products = action.payload
         },

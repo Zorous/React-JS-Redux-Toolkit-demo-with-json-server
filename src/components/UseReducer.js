@@ -9,7 +9,7 @@ function Counter() {
   const [state, dispatch] = useReducer(reducer,initialState);
 
   function reducer(state, action) {
-    // //1
+    //1
     switch (action.type) {
       case 'increment':
         return {count: state.count + action.payload};

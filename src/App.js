@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import Test from './components/Test';
 import Users from './components/Users';
 import { Route,Routes,BrowserRouter } from 'react-router-dom';
+import Users2 from './components/Users2';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
 <Route index element={"Yooo"}></Route>
 <Route path='/products' element={<Products />}></Route>
 <Route path='/users' element={<Users />}></Route>
+<Route path='/users2' element={<Users2 />}></Route>
 
 </Routes>
 
